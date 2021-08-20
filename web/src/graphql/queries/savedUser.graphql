@@ -1,0 +1,8 @@
+query SavedUser {
+  savedUser {
+    id
+    userName
+    email
+    userType
+  }
+}

@@ -1,0 +1,16 @@
+mutation UpdateUserType($id: Float!, $userName: String!, $userType: Boolean!) {
+  updateUserType(
+    inputs: { id: $id, userName: $userName, userType: $userType }
+  ) {
+    errors {
+      field
+      message
+    }
+    user {
+      id
+      email
+      userName
+      userType
+    }
+  }
+}

@@ -1,0 +1,18 @@
+mutation AddProject(
+  $projectName: String!
+  $projectStatus: String!
+  $projectGitHubLink: String!
+) {
+  addProject(
+    inputs: {
+      projectName: $projectName
+      projectStatus: $projectStatus
+      projectGitHubLink: $projectGitHubLink
+    }
+  ) {
+    id
+    projectName
+    projectStatus
+    projectGitHubLink
+  }
+}

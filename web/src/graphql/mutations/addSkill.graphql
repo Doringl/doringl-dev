@@ -1,0 +1,6 @@
+mutation AddSkill($skillName: String!) {
+  addSkill(skillName: $skillName) {
+    id
+    skillName
+  }
+}
