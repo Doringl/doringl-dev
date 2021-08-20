@@ -126,7 +126,9 @@ export class UserResolver {
 
     if (!user) {
       return {
-        errors: [{ field: 'username', message: 'User not found !' }],
+        errors: [
+          { field: 'username', message: `User ${inputs.userName} not found !` },
+        ],
       };
     }
 

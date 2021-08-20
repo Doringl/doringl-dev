@@ -1,7 +1,7 @@
 import { Button, FormControl, Input, useStyleConfig } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Layout from '../../components/Layout/Layout';
@@ -13,8 +13,16 @@ interface ILoginData {
   password: string;
 }
 
+interface IGQLErrors {
+  field: string;
+  message: string;
+}
+
 const Login: React.FC = () => {
   const router = useRouter();
+  const [gqlErrors, setGQLErrors] = useState<IGQLErrors[]>([
+    { field: '', message: '' },
+  ]);
   const { register, handleSubmit, errors } = useForm<ILoginData>();
   const [Login] = useLoginMutation();
   const styles = useStyleConfig('Button', { variant: 'outline', size: 'lg' });
@@ -26,9 +34,9 @@ const Login: React.FC = () => {
         password: String(data.password),
       },
     });
-    if (response.data.login.errors) {
-      console.log(response.data.login.errors);
-    } else if (response.data.login.user) {
+    if (response.data?.login.errors) {
+      setGQLErrors(response.data.login.errors);
+    } else if (response.data?.login.user) {
       if (response.data.login.user.userType === 'admin') {
         router.push('/dashboard');
       }
@@ -39,6 +47,9 @@ const Login: React.FC = () => {
       <Head>
         <title>Login</title>
       </Head>
+      {gqlErrors[0].message ? (
+        <ErrorMessage text={gqlErrors[0].message} />
+      ) : null}
       <form onSubmit={onSubmit}>
         <FormControl id='userName' isRequired>
           <Input
